@@ -1,24 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import { GridBox } from "./components/GridBox";
+import { NavbarMain } from "./components/NavbarMain";
 
 function App() {
+  const [value, setValue] = useState("10");
+  const [array, setArray] = useState();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <div className='App'>
+      <header>
+        <NavbarMain
+          sliderValue={value}
+          setSliderValue={setValue}
+          array={array}
+          setArray={setArray}
+        />
       </header>
+      <main>
+        <GridBox columns={value}></GridBox>
+      </main>
     </div>
   );
 }
