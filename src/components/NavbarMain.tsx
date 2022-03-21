@@ -5,6 +5,7 @@ import { Colors } from "../tokens/Colors";
 import FlexBox from "./FlexBox";
 import { PickerAlgo } from "./PickerAlgo";
 import { Text } from "../tokens/Text";
+import { bubbleSort } from "../algorithms/bubbleSort";
 
 const sortingNames = [
   "Selection sort",
@@ -28,8 +29,15 @@ export const NavbarMain: React.FC<Name> = ({
   array,
   setArray,
 }) => {
+  const [speedValue, setSpeedValue] = useState("150");
   function handleChange(value: string) {
     setSliderValue(value);
+    if (array.length > 0) {
+      handleClick();
+    }
+  }
+  function handleSpeed(value: string) {
+    setSpeedValue(value);
   }
   function handleClick() {
     const nodes = document.querySelectorAll<HTMLElement>(".node");
@@ -41,19 +49,19 @@ export const NavbarMain: React.FC<Name> = ({
     );
     setArray(newArray);
     for (let i = 0; i < sliderValue; i++) {
-      let stepper = 0;
-      while (array[i] > 0) {
-        var node = document.getElementById(`${i + stepper * sliderValue}`);
+      for (let j = 0; j < newArray[i]; j++) {
+        var node = document.getElementById(`${j}-${i}`);
         node!!.style.background = "green";
-        array[i]--;
-        stepper++;
       }
     }
+  }
+  function handleClickTwo() {
+    bubbleSort(array, speedValue);
   }
   return (
     <Wrapper fullWidth fullPadding spacing={Spacings.md} justify='center'>
       <PickerAlgo options={sortingNames}></PickerAlgo>
-      <StyledButton2>{Text.sort}</StyledButton2>
+      <StyledButton2 onClick={handleClickTwo}>{Text.sort}</StyledButton2>
       <StyledButton onClick={handleClick}>{Text.generate}</StyledButton>
       <input
         type='range'
@@ -61,6 +69,14 @@ export const NavbarMain: React.FC<Name> = ({
         max='100'
         value={sliderValue}
         onChange={(event) => handleChange(event.target.value)}
+      />
+      <input
+        type='range'
+        min='10'
+        max='300'
+        value={speedValue}
+        step='10'
+        onChange={(event) => handleSpeed(event.target.value)}
       />
     </Wrapper>
   );

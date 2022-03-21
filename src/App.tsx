@@ -4,7 +4,7 @@ import { NavbarMain } from "./components/NavbarMain";
 
 function App() {
   const [value, setValue] = useState("10");
-  const [array, setArray] = useState();
+  const [array, setArray] = useState([]);
   return (
     <div className='App'>
       <header>

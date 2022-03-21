@@ -6,8 +6,10 @@ type Columns = {
 };
 export const GridBox: React.FC<Columns> = ({ columns }) => {
   var nodes = [];
-  for (var i = 0; i < columns * 13; i++) {
-    nodes.push(<Node key={i} id={i} />);
+  for (var i = 0; i < 13; i++) {
+    for (var j = 0; j < columns; j++) {
+      nodes.push(<Node key={`${i}-${j}`} id={`${i}-${j}`} />);
+    }
   }
   return <Grid columns={columns}>{nodes}</Grid>;
 };
