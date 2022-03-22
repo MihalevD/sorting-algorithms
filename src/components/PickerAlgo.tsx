@@ -7,13 +7,21 @@ import FlexBox from "./FlexBox";
 
 type AlgoArray = {
   options: string[];
+  algoName: any;
+  setAlgoName: any;
 };
-export const PickerAlgo: React.FC<AlgoArray> = ({ options }) => {
+export const PickerAlgo: React.FC<AlgoArray> = ({
+  options,
+  algoName,
+  setAlgoName,
+}) => {
   const [openOptions, setOpenOptions] = useState(false);
-  const [option, setOption] = useState("");
 
   function openAlgo() {
     setOpenOptions(!openOptions);
+  }
+  function handleAlgo(name: string) {
+    setAlgoName(name);
   }
 
   return (
@@ -22,21 +30,21 @@ export const PickerAlgo: React.FC<AlgoArray> = ({ options }) => {
       <Selector
         id='algorithms'
         onClick={() => openAlgo()}
-        chosen={option}
+        chosen={algoName}
         active={openOptions}
       >
         <OptionsBlock active={openOptions}>
           {!!options &&
             options.map((option) => {
               return (
-                <Option key={option} onClick={() => setOption(option)}>
+                <Option key={option} onClick={() => handleAlgo(option)}>
                   {option}
                 </Option>
               );
             })}
         </OptionsBlock>
         <FlexBox top={Spacings.xxs} left={Spacings.xxs}>
-          {option ? option : "Default"}
+          {algoName}
         </FlexBox>
       </Selector>
     </Wrapper>

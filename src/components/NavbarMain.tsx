@@ -6,6 +6,9 @@ import FlexBox from "./FlexBox";
 import { PickerAlgo } from "./PickerAlgo";
 import { Text } from "../tokens/Text";
 import { bubbleSort } from "../algorithms/bubbleSort";
+import { insertionSort } from "../algorithms/insertionSort";
+import { selectSort } from "../algorithms/selectSort";
+import { mergeSort } from "../algorithms/mergeSort";
 
 const sortingNames = [
   "Selection sort",
@@ -30,37 +33,67 @@ export const NavbarMain: React.FC<Name> = ({
   setArray,
 }) => {
   const [speedValue, setSpeedValue] = useState("150");
-  function handleChange(value: string) {
-    setSliderValue(value);
+  const [algoName, setAlgoName] = useState("Default");
+  async function handleChange(value: string) {
+    await setSliderValue(value);
     if (array.length > 0) {
-      handleClick();
+      const newArray = createNewArray(value);
+      paintNumbers(newArray, value);
     }
   }
   function handleSpeed(value: string) {
     setSpeedValue(value);
   }
   function handleClick() {
+    const newArray = createNewArray(sliderValue);
+    paintNumbers(newArray, sliderValue);
+  }
+  function createNewArray(count: string) {
+    const newArray = [...Array(Number(count))].map((_) =>
+      Math.ceil(Math.random() * 13)
+    );
+    setArray(newArray);
+    return newArray;
+  }
+
+  function paintNumbers(array: any, count: string) {
     const nodes = document.querySelectorAll<HTMLElement>(".node");
     nodes.forEach((node) => {
       node.style.background = "white";
     });
-    const newArray = [...Array(Number(sliderValue))].map((_) =>
-      Math.ceil(Math.random() * 13)
-    );
-    setArray(newArray);
-    for (let i = 0; i < sliderValue; i++) {
-      for (let j = 0; j < newArray[i]; j++) {
+    for (let i = 0; i < Number(count); i++) {
+      for (let j = 0; j < array[i]; j++) {
         var node = document.getElementById(`${j}-${i}`);
         node!!.style.background = "green";
       }
     }
   }
   function handleClickTwo() {
-    bubbleSort(array, speedValue);
+    switch (algoName) {
+      case "Bubble sort":
+        bubbleSort(array, speedValue);
+        break;
+      case "Insertion sort":
+        insertionSort(array, speedValue);
+        break;
+      case "Selection sort":
+        selectSort(array, speedValue);
+        break;
+      case "Merge sort":
+        mergeSort(array, speedValue);
+        break;
+      default:
+        insertionSort(array, speedValue);
+        break;
+    }
   }
   return (
     <Wrapper fullWidth fullPadding spacing={Spacings.md} justify='center'>
-      <PickerAlgo options={sortingNames}></PickerAlgo>
+      <PickerAlgo
+        options={sortingNames}
+        algoName={algoName}
+        setAlgoName={setAlgoName}
+      ></PickerAlgo>
       <StyledButton2 onClick={handleClickTwo}>{Text.sort}</StyledButton2>
       <StyledButton onClick={handleClick}>{Text.generate}</StyledButton>
       <input
