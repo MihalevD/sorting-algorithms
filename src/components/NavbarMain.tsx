@@ -34,6 +34,7 @@ export const NavbarMain: React.FC<Name> = ({
 }) => {
   const [speedValue, setSpeedValue] = useState("150");
   const [algoName, setAlgoName] = useState("Default");
+  const [loading, setLoading] = useState(false);
   async function handleChange(value: string) {
     await setSliderValue(value);
     if (array.length > 0) {
@@ -69,21 +70,22 @@ export const NavbarMain: React.FC<Name> = ({
     }
   }
   function handleClickTwo() {
+    setLoading(true);
     switch (algoName) {
       case "Bubble sort":
-        bubbleSort(array, speedValue);
+        bubbleSort(array, speedValue).then(() => setLoading(false));
         break;
       case "Insertion sort":
-        insertionSort(array, speedValue);
+        insertionSort(array, speedValue).then(() => setLoading(false));
         break;
       case "Selection sort":
-        selectSort(array, speedValue);
+        selectSort(array, speedValue).then(() => setLoading(false));
         break;
       case "Merge sort":
-        mergeSort(array, speedValue);
+        mergeSort(array, speedValue).then(() => setLoading(false));
         break;
       default:
-        insertionSort(array, speedValue);
+        insertionSort(array, speedValue).then(() => setLoading(false));
         break;
     }
   }
@@ -94,23 +96,41 @@ export const NavbarMain: React.FC<Name> = ({
         algoName={algoName}
         setAlgoName={setAlgoName}
       ></PickerAlgo>
-      <StyledButton2 onClick={handleClickTwo}>{Text.sort}</StyledButton2>
-      <StyledButton onClick={handleClick}>{Text.generate}</StyledButton>
-      <input
-        type='range'
-        min='1'
-        max='100'
-        value={sliderValue}
-        onChange={(event) => handleChange(event.target.value)}
-      />
-      <input
-        type='range'
-        min='10'
-        max='300'
-        value={speedValue}
-        step='10'
-        onChange={(event) => handleSpeed(event.target.value)}
-      />
+      <StyledButton2 onClick={handleClickTwo} disabled={loading}>
+        {Text.sort}
+      </StyledButton2>
+      <StyledButton onClick={handleClick} disabled={loading}>
+        {Text.generate}
+      </StyledButton>
+      <RangeBox align='center' left={Spacings.lg}>
+        <label htmlFor='arraySize' style={{ marginRight: "15px" }}>
+          Size of array :{" "}
+        </label>
+        <input
+          type='range'
+          min='1'
+          max='100'
+          value={sliderValue}
+          id='arraySize'
+          disabled={loading}
+          onChange={(event) => handleChange(event.target.value)}
+        />
+      </RangeBox>
+      <RangeBox align='center'>
+        <label htmlFor='arraySize' style={{ marginRight: "15px" }}>
+          Speed of sort :{" "}
+        </label>
+        <input
+          type='range'
+          min='10'
+          max='300'
+          value={speedValue}
+          step='10'
+          id='speed'
+          disabled={loading}
+          onChange={(event) => handleSpeed(event.target.value)}
+        />
+      </RangeBox>
     </Wrapper>
   );
 };
@@ -132,4 +152,8 @@ const StyledButton2 = styled("button")`
   margin-left: ${Spacings.lg};
   background: #5a1d1d;
   color: white;
+`;
+
+const RangeBox = styled(FlexBox)`
+  width: 20%;
 `;
