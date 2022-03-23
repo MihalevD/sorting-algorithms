@@ -103,14 +103,11 @@ export const NavbarMain: React.FC<Name> = ({
         algoName={algoName}
         setAlgoName={setAlgoName}
       ></PickerAlgo>
-      <StyledButton2 onClick={handleClickTwo} disabled={loading}>
-        {Text.sort}
-      </StyledButton2>
       <StyledButton onClick={handleClick} disabled={loading}>
         {Text.generate}
       </StyledButton>
       <RangeBox align='center' left={Spacings.lg}>
-        <label htmlFor='arraySize' style={{ marginRight: "15px" }}>
+        <label htmlFor='arraySize' style={{ marginRight: "7px" }}>
           Size of array :{" "}
         </label>
         <input
@@ -123,8 +120,8 @@ export const NavbarMain: React.FC<Name> = ({
           onChange={(event) => handleChange(event.target.value)}
         />
       </RangeBox>
-      <RangeBox align='center'>
-        <label htmlFor='arraySize' style={{ marginRight: "15px" }}>
+      <RangeBox align='center' left={Spacings.md}>
+        <label htmlFor='arraySize' style={{ marginRight: "7px" }}>
           Speed of sort :{" "}
         </label>
         <input
@@ -138,6 +135,9 @@ export const NavbarMain: React.FC<Name> = ({
           onChange={(event) => handleSpeed(event.target.value)}
         />
       </RangeBox>
+      <StyledButton2 onClick={handleClickTwo} disabled={loading}>
+        {Text.sort}
+      </StyledButton2>
     </Wrapper>
   );
 };
