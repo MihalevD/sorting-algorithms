@@ -1,4 +1,4 @@
-import { mark, pause } from "./helpers";
+import { mark, pause, swap } from "./helpers";
 
 export async function bubbleSort(array: any, speedValue: string) {
   for (let i = 0; i < array.length; i++) {
@@ -8,11 +8,7 @@ export async function bubbleSort(array: any, speedValue: string) {
       await mark(j - 1, array[j - 1], "red");
       await pause(Number(speedValue));
       if (array[j] < array[j - 1]) {
-        let swap = array[j - 1];
-        array[j - 1] = array[j];
-        array[j] = swap;
-        await mark(j, array[j], "green");
-        await mark(j - 1, array[j - 1], "white", array[j]);
+        await swap(array, j - 1, j);
         swaps++;
       } else {
         await mark(j, array[j], "green");

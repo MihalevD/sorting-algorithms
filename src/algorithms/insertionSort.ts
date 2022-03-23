@@ -1,4 +1,4 @@
-import { mark, pause } from "./helpers";
+import { mark, pause, swap } from "./helpers";
 
 export async function insertionSort(array: any, speedValue: string) {
   for (let i = 0; i < array.length - 1; ++i) {
@@ -7,12 +7,7 @@ export async function insertionSort(array: any, speedValue: string) {
       await mark(j, array[j], "red");
       await mark(j + 1, array[j + 1], "red");
       await pause(Number(speedValue));
-      let swap = array[j + 1];
-      array[j + 1] = array[j];
-      array[j] = swap;
-      await mark(j, array[j], "green");
-      await mark(j, array[j], "white", array[j + 1]);
-      await mark(j + 1, array[j + 1], "green");
+      await swap(array, j, j + 1);
       j--;
     }
   }

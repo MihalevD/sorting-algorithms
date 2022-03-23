@@ -4,6 +4,7 @@ export async function mark(
   color: string,
   offset?: number
 ) {
+  // console.log(`Coloring position : ${position} with ${number} color: ${color}`);
   if (offset) {
     for (let k = number; k < offset; k++) {
       var node = document.getElementById(`${k}-${position}`);
@@ -23,4 +24,15 @@ export async function pause(time: number) {
       resolve();
     }, time);
   });
+}
+
+export async function swap(array: number[], smaller: number, bigger: number) {
+  // console.log(`switching color from ${smaller} to ${bigger}`);
+  // console.log(`===================`);
+  let temp = array[smaller];
+  array[smaller] = array[bigger];
+  array[bigger] = temp;
+  await mark(bigger, array[bigger], "green");
+  await mark(smaller, array[smaller], "white", array[bigger]);
+  await mark(smaller, array[smaller], "green");
 }

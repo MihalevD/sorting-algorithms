@@ -9,6 +9,7 @@ import { bubbleSort } from "../algorithms/bubbleSort";
 import { insertionSort } from "../algorithms/insertionSort";
 import { selectSort } from "../algorithms/selectSort";
 import { mergeSort } from "../algorithms/mergeSort";
+import { quickSort } from "../algorithms/quickSort";
 
 const sortingNames = [
   "Selection sort",
@@ -16,9 +17,7 @@ const sortingNames = [
   "Insertion Sort",
   "Merge sort",
   "Quick sort",
-  "Heap sort",
-  "Counting sort",
-  "Radix sort",
+  "Shuffle sort WIP",
 ];
 type Name = {
   sliderValue: any;
@@ -83,6 +82,14 @@ export const NavbarMain: React.FC<Name> = ({
         break;
       case "Merge sort":
         mergeSort(array, speedValue).then(() => setLoading(false));
+        break;
+      case "Quick sort":
+        quickSort(array, 0, array.length - 1, Number(speedValue)).then(
+          (res) => {
+            console.log(res);
+            setLoading(false);
+          }
+        );
         break;
       default:
         insertionSort(array, speedValue).then(() => setLoading(false));

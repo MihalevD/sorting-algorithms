@@ -1,4 +1,4 @@
-import { mark, pause } from "./helpers";
+import { mark, pause, swap } from "./helpers";
 
 export async function selectSort(array: any, speedValue: string) {
   for (let i = 0; i < array.length; i++) {
@@ -14,13 +14,8 @@ export async function selectSort(array: any, speedValue: string) {
     await pause(Number(speedValue));
     await mark(minInd, array[minInd], "red");
     await mark(i, array[i], "red");
-    let swap = array[i];
-    array[i] = array[minInd];
-    array[minInd] = swap;
     await pause(Number(speedValue));
-    await mark(minInd, array[minInd], "green");
-    await mark(i, array[i], "white", array[minInd]);
-    await mark(i, array[i], "green");
+    await swap(array, i, minInd);
   }
   for (let index = 0; index < array.length; index++) {
     mark(index, array[index], "purple");

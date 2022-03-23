@@ -47,7 +47,8 @@ async function merge(
   await pause(speed);
   const arrayBoc = [...newArray, ...left, ...right];
   await colorDiff(start, end, "red", arrayBoc);
-
+  await pause(400);
+  await colorDiff(start, end, "green", arrayBoc);
   return [...newArray, ...left, ...right];
 }
 
