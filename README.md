@@ -4,12 +4,12 @@ Welcome to Sorting Visualizer! I built this application because I was fascinated
 isualize them in action through a graph which is easier to see the moves.
 
 ### Available sorts
-*Merge Sort
-*Bubble Sort
-*Insertion sort
-*Selection sort 
-*Quick sort
-*Shuffle sort (WiP)
+- [x] Merge Sort
+- [x] Bubble Sort
+- [x] Insertion sort
+- [x] Selection sort 
+- [x] Quick sort
+- [ ] Shuffle sort (WiP)
 
 ### Available Scripts
 
